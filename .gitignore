@@ -1,0 +1,8 @@
+# Build output
+/TaskBoost.exe
+/TaskBoost.old*.exe
+/release/
+
+# Test programs and what they write
+/tests/bin/
+/tests/out/
