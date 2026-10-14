@@ -190,7 +190,7 @@ namespace TaskBoost
                 kv.Value.Invalidate();
             }
             bool charging = ChargeMode.IsOn;
-            btnCharge.Text = charging ? "Stop phone charging" : "Charge my phone";
+            btnCharge.Text = charging ? "End charging mode" : "Charge my phone";
             btnCharge.Primary = charging;
             btnCharge.Invalidate();
             if (GameModeChanged != null) GameModeChanged(on);

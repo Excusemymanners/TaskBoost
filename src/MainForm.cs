@@ -354,7 +354,7 @@ namespace TaskBoost
                     turbo.FreeMemory();
                     break;
                 case Keys.F5:
-                    buddy.Say(ChargeMode.IsOn ? "Phone charging mode off" : "Keeping the USB ports powered for your phone", "happy");
+                    buddy.Say(ChargeMode.IsOn ? "Charging mode off. The phone still charges while the laptop is on: unplug it to stop." : "Keeping the USB ports powered for your phone", "happy");
                     turbo.ToggleCharge();
                     break;
                 case Keys.F6:

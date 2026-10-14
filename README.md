@@ -132,7 +132,7 @@ An entry is marked Check or Suspicious when it is unsigned, runs from a temp fol
 - frees memory
 - programs under *My games* are set to use the high-performance graphics card, and get high priority while gaming mode is on and TaskBoost is running
 
-**Charge my phone** keeps the USB ports powered so a phone keeps charging from the PC: USB power saving is switched off, the PC does not sleep or hibernate, and closing the lid does nothing (the screen can still turn off). **Stop phone charging** puts every setting back. On battery this drains the laptop to feed the phone.
+**Charge my phone** keeps the USB ports powered so a phone keeps charging from the PC: USB power saving is switched off, the PC does not sleep or hibernate, and closing the lid does nothing (the screen can still turn off). **End charging mode** puts every setting back. On battery this drains the laptop to feed the phone. Ending it does not cut the power to the port: Windows has no switch for that, so a phone that is plugged in keeps charging while the laptop is on, and stops when the laptop sleeps or the lid is closed (unless the BIOS or Lenovo Vantage has "Always On USB" switched on). Unplug the phone to stop it at once.
 
 **Free memory now** asks every program to give back memory it is not using and, as administrator, empties the Windows file cache. Nothing is closed.
 

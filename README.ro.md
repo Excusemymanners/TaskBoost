@@ -134,7 +134,7 @@ O intrare e marcată Verifică sau Suspect când e nesemnată, rulează dintr-un
 - eliberează memoria
 - programele din *Jocurile mele* sunt setate să folosească placa video performantă și primesc prioritate mare cât modul de gaming e pornit și TaskBoost rulează
 
-**Încarcă telefonul** ține porturile USB alimentate, ca telefonul să se încarce de la PC: economisirea de energie pe USB e oprită, PC-ul nu intră în repaus sau hibernare, iar închiderea capacului nu face nimic (ecranul se poate stinge în continuare). **Oprește încărcarea** pune toate setările la loc. Pe baterie, asta consumă laptopul ca să hrănească telefonul.
+**Încarcă telefonul** ține porturile USB alimentate, ca telefonul să se încarce de la PC: economisirea de energie pe USB e oprită, PC-ul nu intră în repaus sau hibernare, iar închiderea capacului nu face nimic (ecranul se poate stinge în continuare). **Oprește modul de încărcare** pune toate setările la loc. Pe baterie, asta consumă laptopul ca să hrănească telefonul. Oprirea nu taie curentul din port: Windows nu are un comutator pentru asta, deci un telefon conectat se încarcă în continuare cât laptopul e pornit și se oprește când laptopul intră în repaus sau închizi capacul (dacă în BIOS sau în Lenovo Vantage nu e pornit „Always On USB”). Scoate telefonul din port ca să se oprească imediat.
 
 **Eliberează memoria** cere fiecărui program să dea înapoi memoria pe care nu o folosește și, ca administrator, golește cache-ul de fișiere al Windows. Nu se închide nimic.
 

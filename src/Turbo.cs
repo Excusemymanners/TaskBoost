@@ -198,6 +198,8 @@ namespace TaskBoost
                 PowerShell("$names = @(" + string.Join(",", hubs) + "); Get-CimInstance -Namespace root\\wmi -ClassName MSPower_DeviceEnable | Where-Object { $names -contains $_.InstanceName } | ForEach-Object { Set-CimInstance -InputObject $_ -Property @{ Enable = $true } }", out output);
             State.Clear();
             Log.Info("Charging mode is OFF: sleep, lid and USB power settings are back as they were");
+            // Windows has no switch that cuts the power of a USB port, so it is worth saying what Off does not do
+            Log.Info("A phone that is plugged in still charges while the laptop is on (Windows cannot switch a USB port's power off); now it stops when the laptop sleeps or the lid is closed. Unplug it to stop at once.");
         }
     }
 
