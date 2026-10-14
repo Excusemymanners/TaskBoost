@@ -7,8 +7,8 @@ using System.Windows.Forms;
 [assembly: AssemblyTitle("TaskBoost")]
 [assembly: AssemblyDescription("Applies a lean, fast, battery-friendly Windows setup")]
 [assembly: AssemblyProduct("TaskBoost")]
-[assembly: AssemblyVersion("1.1.0.0")]
-[assembly: AssemblyFileVersion("1.1.0.0")]
+[assembly: AssemblyVersion("1.1.1.0")]
+[assembly: AssemblyFileVersion("1.1.1.0")]
 
 namespace TaskBoost
 {
