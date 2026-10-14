@@ -132,8 +132,6 @@ An entry is marked Check or Suspicious when it is unsigned, runs from a temp fol
 - frees memory
 - programs under *My games* are set to use the high-performance graphics card, and get high priority while gaming mode is on and TaskBoost is running
 
-**Charge my phone** keeps the USB ports powered so a phone keeps charging from the PC: USB power saving is switched off, the PC does not sleep or hibernate, and closing the lid does nothing (the screen can still turn off). **End charging mode** puts every setting back. On battery this drains the laptop to feed the phone. Ending it does not cut the power to the port: Windows has no switch for that, so a phone that is plugged in keeps charging while the laptop is on, and stops when the laptop sleeps or the lid is closed (unless the BIOS or Lenovo Vantage has "Always On USB" switched on). Unplug the phone to stop it at once.
-
 **Free memory now** asks every program to give back memory it is not using and, as administrator, empties the Windows file cache. Nothing is closed.
 
 **Safe clean-up** deletes only inside a fixed list of folders (your temp folder, the Windows temp folder, crash dumps, error reports), only files older than a week, never through links or junctions, and it skips anything in use. *Preview clean-up* shows what would be freed without deleting. Recycle Bin and clipboard are off unless you switch them on. It does not use `diskpart` and cannot touch Windows, programs or documents.
@@ -259,7 +257,6 @@ Global shortcuts work anywhere while TaskBoost is running, even from the tray. *
 | Ctrl+Alt+F1 | Show or hide TaskBoost |
 | Ctrl+Alt+F2 | Gaming mode on / off |
 | Ctrl+Alt+F3 | Free memory |
-| Ctrl+Alt+F5 | Charge my phone on / off |
 | Ctrl+Alt+F6 | Ask Claude |
 | Ctrl+Alt+F7 | Send the buddy away / call it back |
 | Ctrl+Alt+F8 | Quick health report from the buddy |
@@ -306,7 +303,7 @@ Run `build.bat`. It uses the C# compiler that ships with Windows (.NET Framework
 | `scans` | The guard, the startup list, the health report and the score on the real PC, read-only |
 | `mcp` | The MCP server as Claude talks to it: every read-only tool, errors, and a clean stop |
 | `ui` | The real window, shown off-screen: every tab, the tab bar, switches, dialogs, the tray menu, shortcuts, the Pomodoro, and the buddy's clicks, menu and drop |
-| `live` | Only with `test.bat live`. Round trips on the real system, each of which puts back what it changed: a test entry in the sign-in list (the guard must notice it; the Startup switch must turn it off and on), the per-user Boost tweaks applied and restored, gaming and charging mode on and off (the parts that need no administrator), the laptop modes, and the online update check |
+| `live` | Only with `test.bat live`. Round trips on the real system, each of which puts back what it changed: a test entry in the sign-in list (the guard must notice it; the Startup switch must turn it off and on), the per-user Boost tweaks applied and restored, gaming mode on and off (the part that needs no administrator), the laptop modes, and the online update check |
 
 What the self-test cannot do is approve a Windows administrator prompt, so the administrator-only parts (services, boot options, the sign-in task, net focus, system maintenance) are not run by it.
 

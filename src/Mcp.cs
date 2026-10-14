@@ -261,7 +261,7 @@ namespace TaskBoost
                 {
                     { "protocolVersion", parameters.ContainsKey("protocolVersion") ? parameters["protocolVersion"] : "2025-06-18" },
                     { "capabilities", new Dictionary<string, object> { { "tools", new Dictionary<string, object>() } } },
-                    { "serverInfo", new Dictionary<string, object> { { "name", "taskboost" }, { "version", "1.1.1" } } },
+                    { "serverInfo", new Dictionary<string, object> { { "name", "taskboost" }, { "version", "1.1.2" } } },
                     { "instructions", Instructions }
                 };
             }

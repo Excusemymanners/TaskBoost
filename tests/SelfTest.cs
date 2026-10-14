@@ -22,7 +22,7 @@ namespace TaskBoost
     //   SelfTest.exe            everything that changes nothing on the PC: logic, sandboxed files and registry,
     //                           read-only scans, the MCP server, and the window (shown off-screen)
     //   SelfTest.exe live       also the round trips on the real system, each of which puts back what it changed:
-    //                           a test entry in the sign-in list, the Boost tweaks, gaming and charging mode
+    //                           a test entry in the sign-in list, the Boost tweaks, gaming mode
     //                           (the parts that need no administrator), the laptop modes
     //   SelfTest.exe <group>    one group only: logic, sandbox, scans, mcp, ui, live
     static class SelfTest
@@ -745,12 +745,12 @@ namespace TaskBoost
                 Pump(300);
                 Check("and closes", !trayMenu.Visible);
 
-                // Shortcuts arrive as WM_HOTKEY; index 5 is Ctrl+Alt+F7, the buddy away and back
+                // Shortcuts arrive as WM_HOTKEY; index 4 is Ctrl+Alt+F7, the buddy away and back
                 bool goneBefore = buddy.IsGone;
-                PostMessage(form.Handle, 0x312, (IntPtr)5, IntPtr.Zero);
+                PostMessage(form.Handle, 0x312, (IntPtr)4, IntPtr.Zero);
                 Pump(300);
                 bool gone = buddy.IsGone;
-                PostMessage(form.Handle, 0x312, (IntPtr)5, IntPtr.Zero);
+                PostMessage(form.Handle, 0x312, (IntPtr)4, IntPtr.Zero);
                 Pump(300);
                 Check("the buddy shortcut sends it away and calls it back", !goneBefore && gone && !buddy.IsGone);
 
@@ -988,14 +988,6 @@ namespace TaskBoost
             Check("while it is on, the laptop mode counts as gaming", LaptopMode.Effective == "turbo");
             string gameOff = Mcp.Capture(GameMode.Off);
             Check("it switches off and puts the power plan and settings back", !GameMode.IsOn && gameOff.Contains("Gaming mode is OFF") && ActiveScheme() == plan && Equals(dvr, Registry.GetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_Enabled", null)) && Log.Errors == errors, gameOff.Trim().Replace("\r\n", " / "));
-
-            Section("LIVE: phone charging mode on and off (without administrator)");
-            string lid = PowerValue("SUB_BUTTONS", "LIDACTION"), sleep = PowerValue("SUB_SLEEP", "STANDBYIDLE"), hibernate = PowerValue("SUB_SLEEP", "HIBERNATEIDLE");
-            string chargeOn = Mcp.Capture(ChargeMode.On);
-            Check("on: the lid does nothing and the PC does not sleep", ChargeMode.IsOn && PowerValue("SUB_BUTTONS", "LIDACTION") == "00000000/00000000" && PowerValue("SUB_SLEEP", "STANDBYIDLE") == "00000000/00000000", chargeOn.Trim().Replace("\r\n", " / "));
-            string chargeOff = Mcp.Capture(ChargeMode.Off);
-            Check("off: lid, sleep and hibernate are back exactly as they were", !ChargeMode.IsOn && PowerValue("SUB_BUTTONS", "LIDACTION") == lid && PowerValue("SUB_SLEEP", "STANDBYIDLE") == sleep && PowerValue("SUB_SLEEP", "HIBERNATEIDLE") == hibernate && Log.Errors == errors,
-                "lid " + lid + " -> " + PowerValue("SUB_BUTTONS", "LIDACTION") + ", sleep " + sleep + " -> " + PowerValue("SUB_SLEEP", "STANDBYIDLE"));
 
             Section("LIVE: laptop modes (ends on the mode TaskBoost is really in)");
             string realModeFile = Path.Combine(realDir, "laptop-mode.txt");

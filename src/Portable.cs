@@ -63,7 +63,7 @@ namespace TaskBoost
     {
         public static void Run(Action<string> progress)
         {
-            progress("Leaving gaming, charging and net focus modes...");
+            progress("Leaving gaming mode and net focus...");
             if (GameMode.IsOn) Helper.Run("game-off");
             if (ChargeMode.IsOn) Helper.Run("charge-off");
             if (NetFocus.IsOn) Helper.Run("net-off");

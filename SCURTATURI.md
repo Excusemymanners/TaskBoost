@@ -9,7 +9,6 @@ Un singur preset, fără nimic de configurat. Scurtăturile globale merg oriunde
 | **Ctrl + Alt + F1** | Arată fereastra TaskBoost sau o ascunde în tray | Ca să deschizi aplicația fără să-i cauți iconița |
 | **Ctrl + Alt + F2** | Gaming mode pornit / oprit | Chiar înainte să pornești un joc și din nou când termini |
 | **Ctrl + Alt + F3** | Eliberează memoria | Când PC-ul merge greu, înainte să deschizi ceva mare |
-| **Ctrl + Alt + F5** | Modul de încărcare a telefonului pornit / oprit | Când bagi telefonul în USB și din nou când îl scoți |
 | **Ctrl + Alt + F6** | Deschide Claude, care îți verifică deja PC-ul | Când vrei să-ți explice sau să-ți verifice ceva |
 | **Ctrl + Alt + F7** | Trimite păianjenul de pe ecran sau îl cheamă înapoi | Când păianjenul te încurcă |
 | **Ctrl + Alt + F8** | Raport rapid de sănătate, spus de păianjen | Ca să vezi dintr-o privire spațiul liber, memoria și uzura bateriei |
@@ -17,7 +16,7 @@ Un singur preset, fără nimic de configurat. Scurtăturile globale merg oriunde
 | **Ctrl + Alt + F10** | Modul Normal | Folosire de zi cu zi |
 | **Ctrl + Alt + F11** | Modul Best performance | Lucru greu: randare, compilare, fișiere mari |
 
-Gaming mode și încărcarea telefonului cer aprobarea de administrator, pentru că schimbă setări de sistem. Prima dată, TaskBoost se oferă să fie aprobat o singură dată pentru sesiune; după aceea nu mai întreabă până îl închizi. Amândouă pun totul înapoi când le oprești.
+Gaming mode cere aprobarea de administrator, pentru că schimbă setări de sistem. Prima dată, TaskBoost se oferă să fie aprobat o singură dată pentru sesiune; după aceea nu mai întreabă până îl închizi. Pune totul înapoi când îl oprești.
 
 F4 lipsește intenționat: e lângă Alt+F4, care închide ferestre.
 

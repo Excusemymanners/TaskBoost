@@ -17,7 +17,6 @@ namespace TaskBoost
             "Ctrl+Alt+F1\tArată sau ascunde TaskBoost\n" +
             "Ctrl+Alt+F2\tGaming pornit / oprit\n" +
             "Ctrl+Alt+F3\tEliberează memoria\n" +
-            "Ctrl+Alt+F5\tÎncărcare telefon pornit / oprit\n" +
             "Ctrl+Alt+F6\tÎntreabă Claude\n" +
             "Ctrl+Alt+F7\tTrimite păianjenul / cheamă-l înapoi\n" +
             "Ctrl+Alt+F8\tRaport rapid de sănătate (îl spune păianjenul)\n" +
@@ -36,7 +35,6 @@ namespace TaskBoost
             "Ctrl+Alt+F1\tShow or hide TaskBoost\n" +
             "Ctrl+Alt+F2\tGaming mode on / off\n" +
             "Ctrl+Alt+F3\tFree memory\n" +
-            "Ctrl+Alt+F5\tCharge my phone on / off\n" +
             "Ctrl+Alt+F6\tAsk Claude\n" +
             "Ctrl+Alt+F7\tSend the buddy away / call it back\n" +
             "Ctrl+Alt+F8\tQuick health report (the buddy tells you)\n" +
@@ -47,7 +45,7 @@ namespace TaskBoost
             "Ctrl+1 ... Ctrl+6\tHome, Boost, Guard, Startup, Turbo, Care\n" +
             "Esc\tClose the window to the tray\n" +
             "F1\tThis list";
-        static readonly Keys[] HotKeys = { Keys.F1, Keys.F2, Keys.F3, Keys.F5, Keys.F6, Keys.F7, Keys.F8, Keys.F9, Keys.F10, Keys.F11 };
+        static readonly Keys[] HotKeys = { Keys.F1, Keys.F2, Keys.F3, Keys.F6, Keys.F7, Keys.F8, Keys.F9, Keys.F10, Keys.F11 };
 
         readonly HeaderPanel header = new HeaderPanel();
         readonly HomePage home = new HomePage();
@@ -352,10 +350,6 @@ namespace TaskBoost
                 case Keys.F3:
                     buddy.Say("Freeing memory", "music");
                     turbo.FreeMemory();
-                    break;
-                case Keys.F5:
-                    buddy.Say(ChargeMode.IsOn ? "Charging mode off. The phone still charges while the laptop is on: unplug it to stop." : "Keeping the USB ports powered for your phone", "happy");
-                    turbo.ToggleCharge();
                     break;
                 case Keys.F6:
                     ShowFromTray();

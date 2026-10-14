@@ -9,7 +9,6 @@ One preset, nothing to set up. The global shortcuts work anywhere in Windows as 
 | **Ctrl + Alt + F1** | Shows the TaskBoost window, or hides it to the tray | To open the app without looking for its icon |
 | **Ctrl + Alt + F2** | Gaming mode on / off | Right before starting a game, and again when you finish |
 | **Ctrl + Alt + F3** | Frees memory | When the PC feels heavy, before opening something big |
-| **Ctrl + Alt + F5** | Phone charging mode on / off | When you plug the phone in, and again when you unplug it |
 | **Ctrl + Alt + F6** | Opens Claude, already asked to look over the PC | When you want something checked or explained |
 | **Ctrl + Alt + F7** | Sends the buddy away, or calls it back | When the spider is in the way |
 | **Ctrl + Alt + F8** | Quick health report in the buddy's speech bubble | To see free disk space, memory and battery wear at a glance |
@@ -17,7 +16,7 @@ One preset, nothing to set up. The global shortcuts work anywhere in Windows as 
 | **Ctrl + Alt + F10** | Normal mode | Everyday use |
 | **Ctrl + Alt + F11** | Best performance mode | Heavy work: rendering, compiling, big files |
 
-Gaming mode and phone charging ask for administrator approval, because they change system settings. The first time, TaskBoost offers to be approved once for the session; after that it does not ask again until you exit it. Both put everything back when you switch them off.
+Gaming mode asks for administrator approval, because it changes system settings. The first time, TaskBoost offers to be approved once for the session; after that it does not ask again until you exit it. It puts everything back when you switch it off.
 
 F4 is skipped on purpose: it sits next to Alt+F4, which closes windows.
 

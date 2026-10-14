@@ -106,20 +106,12 @@ namespace TaskBoost
         }
     }
 
-    // Keeps the USB ports powered so a phone keeps charging: no USB power saving, no sleep, and closing the lid
-    // does nothing. Temporary, like gaming mode: Off() puts every setting back.
+    // What is left of the old "charge my phone" mode, which kept the PC awake so a phone could charge from it.
+    // It was taken out because no program can cut a USB port's power, so it could not stop the charging either.
+    // Off() stays, to put the settings back for anyone who still had the mode on.
     static class ChargeMode
     {
         const string StateFile = "charge-state.txt";
-
-        // power subgroup, setting, value while charging
-        static readonly string[][] Power =
-        {
-            new[] { "2a737441-1930-4402-8d77-b2bebba308a3", "48e6b7a6-50f5-4782-a5d4-53bb8f07e226", "0" }, // USB selective suspend off
-            new[] { "SUB_BUTTONS", "LIDACTION", "0" },      // closing the lid does nothing
-            new[] { "SUB_SLEEP", "STANDBYIDLE", "0" },      // never sleep
-            new[] { "SUB_SLEEP", "HIBERNATEIDLE", "0" }     // never hibernate
-        };
 
         public static bool IsOn
         {
@@ -133,47 +125,6 @@ namespace TaskBoost
         static int PowerShell(string script, out string output)
         {
             return Util.Run("powershell.exe", "-NoProfile -EncodedCommand " + Convert.ToBase64String(Encoding.Unicode.GetBytes(script)), out output);
-        }
-
-        public static void On()
-        {
-            State.FileName = StateFile;
-            State.Record("mode", "on", DateTime.Now.ToString("s"));
-
-            string output;
-            Util.Run("powercfg.exe", "/getactivescheme", out output);
-            string scheme = Regex.Match(output, "[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}", RegexOptions.IgnoreCase).Value;
-            if (scheme.Length == 0) scheme = "SCHEME_CURRENT";
-            State.Record("scheme", "active", scheme);
-            foreach (string[] p in Power)
-            {
-                // The last two hex values printed are the current plugged-in and on-battery settings
-                if (Util.Run("powercfg.exe", "/qh " + scheme + " " + p[0] + " " + p[1], out output) == 0)
-                {
-                    var m = Regex.Matches(output, @":\s*0x([0-9a-fA-F]{8})\s*$", RegexOptions.Multiline);
-                    if (m.Count >= 2)
-                    {
-                        State.Record("pwr", "ac|" + p[0] + "|" + p[1], Convert.ToUInt32(m[m.Count - 2].Groups[1].Value, 16).ToString());
-                        State.Record("pwr", "dc|" + p[0] + "|" + p[1], Convert.ToUInt32(m[m.Count - 1].Groups[1].Value, 16).ToString());
-                    }
-                }
-                Util.RunLogged("powercfg.exe", "/setacvalueindex " + scheme + " " + p[0] + " " + p[1] + " " + p[2]);
-                Util.RunLogged("powercfg.exe", "/setdcvalueindex " + scheme + " " + p[0] + " " + p[1] + " " + p[2]);
-            }
-            Util.RunLogged("powercfg.exe", "/setactive " + scheme);
-            Log.Info("USB power saving off; the PC will not sleep, and closing the lid does nothing");
-
-            if (App.IsElevated)
-            {
-                // Same as unticking "Allow the computer to turn off this device to save power" on every USB hub
-                PowerShell("Get-CimInstance -Namespace root\\wmi -ClassName MSPower_DeviceEnable | Where-Object { $_.InstanceName -like 'USB\\*' -and $_.Enable } | ForEach-Object { Set-CimInstance -InputObject $_ -Property @{ Enable = $false }; $_.InstanceName }", out output);
-                int hubs = 0;
-                foreach (string line in output.Split('\n'))
-                    if (line.Trim().StartsWith("USB\\")) { State.Record("hub", line.Trim(), "1"); hubs++; }
-                Log.Info("USB hubs kept powered: " + hubs);
-            }
-            else Log.Info("not administrator: the USB hubs keep their own power-saving setting");
-            Log.Info("Charging mode is ON. The screen can still turn off; on battery this drains the laptop to feed the phone.");
         }
 
         public static void Off()
@@ -197,9 +148,7 @@ namespace TaskBoost
             if (hubs.Count > 0)
                 PowerShell("$names = @(" + string.Join(",", hubs) + "); Get-CimInstance -Namespace root\\wmi -ClassName MSPower_DeviceEnable | Where-Object { $names -contains $_.InstanceName } | ForEach-Object { Set-CimInstance -InputObject $_ -Property @{ Enable = $true } }", out output);
             State.Clear();
-            Log.Info("Charging mode is OFF: sleep, lid and USB power settings are back as they were");
-            // Windows has no switch that cuts the power of a USB port, so it is worth saying what Off does not do
-            Log.Info("A phone that is plugged in still charges while the laptop is on (Windows cannot switch a USB port's power off); now it stops when the laptop sleeps or the lid is closed. Unplug it to stop at once.");
+            Log.Info("Phone charging mode is off: sleep, lid and USB power settings are back as they were");
         }
     }
 

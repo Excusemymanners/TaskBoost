@@ -122,7 +122,78 @@ namespace TaskBoost
             if (only == "" || only == "window" || filmOnly) Window(false);
             if (only == "" || only == "ro") Window(true);
             if (only == "" || only == "buddy") Buddy();
+            if (only == "redraw") Redraw();
             return 0;
+        }
+
+        // When the screen cannot be captured (something full-screen in front, a locked PC), the Turbo tab and
+        // the shortcut list are drawn straight from the controls into the existing pictures, which keep their
+        // title bars
+        static void Redraw()
+        {
+            using (var show = new EventWaitHandle(false, EventResetMode.AutoReset))
+            using (var exit = new EventWaitHandle(false, EventResetMode.AutoReset))
+            {
+                var form = new MainForm(false, show, exit);
+                form.StartPosition = FormStartPosition.Manual;
+                form.Location = new Point(-30000, -30000);
+                typeof(MainForm).GetField("trayHintShown", Any).SetValue(form, true);
+                form.Show();
+                Pump(500);
+                var pages = Field<Control[]>(form, "pages");
+                Call(form, "ShowPage", 4);
+                Pump(1200);
+                Paste(form, pages[4], "turbo");
+
+                var timer = new System.Windows.Forms.Timer();
+                timer.Interval = 250;
+                int waited = 0;
+                timer.Tick += delegate
+                {
+                    foreach (Form f in Application.OpenForms)
+                        if (f is Dialog && f.Visible && ++waited > 3)
+                        {
+                            timer.Stop();
+                            Paste(f, f, "keys");
+                            f.DialogResult = DialogResult.No;
+                            return;
+                        }
+                };
+                timer.Start();
+                Dialog.Shortcuts(form, MainForm.ShortcutHelp);
+                timer.Dispose();
+                typeof(MainForm).GetField("exiting", Any).SetValue(form, true);
+                form.Close();
+                Pump(300);
+            }
+        }
+
+        // The window's inside, drawn by the controls, laid over the old picture below its title bar
+        static void Paste(Form form, Control inside, string name)
+        {
+            string file = Path.Combine(docs, name + ".png");
+            // Everything above the part that is redrawn comes from the old picture (title bar, and for a tab the header)
+            Point client = inside.PointToScreen(Point.Empty);
+            int dx = client.X - form.Left, dy = client.Y - form.Top;
+            using (var old = new Bitmap(file))
+            using (var body = new Bitmap(form.ClientSize.Width, form.ClientSize.Height))
+            using (var result = new Bitmap(form.Width, form.Height, PixelFormat.Format24bppRgb))
+            {
+                form.DrawToBitmap(body, new Rectangle(Point.Empty, form.Size)); // whole form first, to get every child
+                using (var g = Graphics.FromImage(result))
+                {
+                    g.Clear(Theme.Bg);
+                    g.DrawImage(old, new Rectangle(0, 0, old.Width, Math.Min(old.Height, result.Height)), new Rectangle(0, 0, old.Width, Math.Min(old.Height, result.Height)), GraphicsUnit.Pixel);
+                    using (var whole = new Bitmap(form.Width, form.Height))
+                    {
+                        form.DrawToBitmap(whole, new Rectangle(Point.Empty, form.Size));
+                        g.DrawImage(whole, new Rectangle(dx, dy, inside.Width, inside.Height), new Rectangle(dx, dy, inside.Width, inside.Height), GraphicsUnit.Pixel);
+                    }
+                }
+                old.Dispose();
+                result.Save(file, ImageFormat.Png);
+                Console.WriteLine("  " + name + ".png redrawn  " + result.Width + "x" + result.Height);
+            }
         }
 
         // ---------------------------------------------------------------- the buddy's faces and costumes
@@ -186,7 +257,9 @@ namespace TaskBoost
             using (var exit = new EventWaitHandle(false, EventResetMode.AutoReset))
             {
                 var form = new MainForm(false, show, exit);
-                int marginX = Theme.Px(70), top = Theme.Px(210), bottom = Theme.Px(50);
+                // On a small screen the room above the window for the buddy shrinks, so the whole window stays on screen
+                int marginX = Theme.Px(70), bottom = Math.Max(0, Math.Min(Theme.Px(50), (screen.Height - form.Height) / 4));
+                int top = Math.Max(0, Math.Min(Theme.Px(210), screen.Height - form.Height - bottom));
                 var stage = new Rectangle(screen.Left + (screen.Width - form.Width - 2 * marginX) / 2, screen.Top + Math.Max(0, (screen.Height - form.Height - top - bottom) / 2), form.Width + 2 * marginX, form.Height + top + bottom);
                 using (var backdrop = new Backdrop(stage))
                 {

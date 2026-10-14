@@ -7,8 +7,8 @@ using System.Windows.Forms;
 [assembly: AssemblyTitle("TaskBoost")]
 [assembly: AssemblyDescription("Applies a lean, fast, battery-friendly Windows setup")]
 [assembly: AssemblyProduct("TaskBoost")]
-[assembly: AssemblyVersion("1.1.1.0")]
-[assembly: AssemblyFileVersion("1.1.1.0")]
+[assembly: AssemblyVersion("1.1.2.0")]
+[assembly: AssemblyFileVersion("1.1.2.0")]
 
 namespace TaskBoost
 {
@@ -95,6 +95,9 @@ namespace TaskBoost
             // Keep the link to Claude in place without the user doing anything (also repairs it if the folder was moved)
             try { Log.Info(ClaudeLink.EnsureRegistered()); }
             catch (Exception) { }
+            // The phone charging mode is gone; anyone who still had it on gets their sleep and lid settings back
+            try { if (ChargeMode.IsOn) Helper.Run("charge-off"); }
+            catch (Exception ex) { Log.Error(ex.Message); }
             // Net focus that was still on when TaskBoost last stopped: nothing is keeping it any more
             try { NetFocus.EndLeftover(); }
             catch (Exception ex) { Log.Error(ex.Message); }
@@ -127,7 +130,6 @@ namespace TaskBoost
                         string target = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(Value(args, "--target")));
                         StartupInfo.SetEnabled(target.Split('\n'), Value(args, "--on") == "1");
                         break;
-                    case "charge-on": ChargeMode.On(); break;
                     case "charge-off": ChargeMode.Off(); break;
                     case "updates-check": Updates.Check(); break;
                     case "updates-install": Updates.Install(); break;

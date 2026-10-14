@@ -134,8 +134,6 @@ O intrare e marcată Verifică sau Suspect când e nesemnată, rulează dintr-un
 - eliberează memoria
 - programele din *Jocurile mele* sunt setate să folosească placa video performantă și primesc prioritate mare cât modul de gaming e pornit și TaskBoost rulează
 
-**Încarcă telefonul** ține porturile USB alimentate, ca telefonul să se încarce de la PC: economisirea de energie pe USB e oprită, PC-ul nu intră în repaus sau hibernare, iar închiderea capacului nu face nimic (ecranul se poate stinge în continuare). **Oprește modul de încărcare** pune toate setările la loc. Pe baterie, asta consumă laptopul ca să hrănească telefonul. Oprirea nu taie curentul din port: Windows nu are un comutator pentru asta, deci un telefon conectat se încarcă în continuare cât laptopul e pornit și se oprește când laptopul intră în repaus sau închizi capacul (dacă în BIOS sau în Lenovo Vantage nu e pornit „Always On USB”). Scoate telefonul din port ca să se oprească imediat.
-
 **Eliberează memoria** cere fiecărui program să dea înapoi memoria pe care nu o folosește și, ca administrator, golește cache-ul de fișiere al Windows. Nu se închide nimic.
 
 **Curățarea sigură** șterge doar într-o listă fixă de dosare (dosarul tău temporar, dosarul temporar al Windows, capturile de memorie după erori, rapoartele de erori), doar fișiere mai vechi de o săptămână, niciodată prin legături sau joncțiuni, și sare peste ce e în uz. *Previzualizare* arată ce s-ar elibera, fără să șteargă. Coșul de reciclare și clipboardul sunt oprite până le pornești tu. Nu folosește `diskpart` și nu poate atinge Windows, programele sau documentele.
@@ -261,7 +259,6 @@ Scurtăturile globale merg oriunde cât TaskBoost rulează, chiar și din tray. 
 | Ctrl+Alt+F1 | Arată sau ascunde TaskBoost |
 | Ctrl+Alt+F2 | Gaming pornit / oprit |
 | Ctrl+Alt+F3 | Eliberează memoria |
-| Ctrl+Alt+F5 | Încărcarea telefonului pornită / oprită |
 | Ctrl+Alt+F6 | Întreabă Claude |
 | Ctrl+Alt+F7 | Trimite păianjenul / cheamă-l înapoi |
 | Ctrl+Alt+F8 | Raport rapid de sănătate, spus de păianjen |
@@ -308,7 +305,7 @@ Rulează `build.bat`. Folosește compilatorul C# care vine cu Windows (.NET Fram
 | `scans` | Garda, lista de pornire, raportul de sănătate și scorul, pe PC-ul real, doar citire |
 | `mcp` | Serverul MCP, așa cum vorbește Claude cu el: fiecare unealtă care doar citește, erorile și oprirea curată |
 | `ui` | Fereastra reală, afișată în afara ecranului: fiecare tab, bara de taburi, comutatoarele, dialogurile, meniul din tray, scurtăturile, Pomodoro și clicurile, meniul și „lăsatul pe o fereastră” ale păianjenului |
-| `live` | Doar cu `test.bat live`. Drumuri dus-întors pe sistemul real, fiecare punând la loc ce a schimbat: o intrare de probă în lista de logare (garda trebuie să o observe; comutatorul din Pornire trebuie să o oprească și să o pornească), setările Boost ale utilizatorului aplicate și readuse, modul de gaming și cel de încărcare pornite și oprite (părțile care nu cer administrator), modurile de laptop și căutarea online de actualizări |
+| `live` | Doar cu `test.bat live`. Drumuri dus-întors pe sistemul real, fiecare punând la loc ce a schimbat: o intrare de probă în lista de logare (garda trebuie să o observe; comutatorul din Pornire trebuie să o oprească și să o pornească), setările Boost ale utilizatorului aplicate și readuse, modul de gaming pornit și oprit (partea care nu cere administrator), modurile de laptop și căutarea online de actualizări |
 
 Ce nu poate face programul de teste e să aprobe o cerere de administrator a Windows, deci părțile care merg doar ca administrator (servicii, opțiuni de pornire, sarcina de la logare, net focus, mentenanța de sistem) nu sunt rulate de el.
 

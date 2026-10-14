@@ -37,7 +37,7 @@ namespace TaskBoost
         readonly Panel gamesPanel = new Panel(), logPanel = new Panel();
         readonly ListBox games = new ListBox();
         readonly TextBox logBox = new TextBox();
-        readonly FlatButton btnGame = new FlatButton(), btnAdd = new FlatButton(), btnRemove = new FlatButton(), btnMemory = new FlatButton(), btnCharge = new FlatButton(), btnPreview = new FlatButton(), btnClean = new FlatButton();
+        readonly FlatButton btnGame = new FlatButton(), btnAdd = new FlatButton(), btnRemove = new FlatButton(), btnMemory = new FlatButton(), btnPreview = new FlatButton(), btnClean = new FlatButton();
         readonly Timer priorityTimer = new Timer();
         bool loading = true;
 
@@ -100,11 +100,9 @@ namespace TaskBoost
             btnAdd.Click += delegate { AddGame(); };
             btnRemove.Click += delegate { RemoveGame(); };
             btnMemory.Click += delegate { RunBusy("free-memory", btnMemory); };
-            // Keeps the USB ports powered (no sleep, lid does nothing) so a phone keeps charging
-            btnCharge.Click += delegate { ToggleCharge(); };
             btnPreview.Click += delegate { RunBusy("clean-preview --items " + string.Join(",", Selected(CleanOptions)), btnPreview); };
             btnClean.Click += delegate { Clean(); };
-            Controls.AddRange(new Control[] { btnGame, btnAdd, btnRemove, btnMemory, btnCharge, btnPreview, btnClean });
+            Controls.AddRange(new Control[] { btnGame, btnAdd, btnRemove, btnMemory, btnPreview, btnClean });
 
             logBox.Multiline = true;
             logBox.ReadOnly = true;
@@ -157,7 +155,6 @@ namespace TaskBoost
             btnAdd.SetBounds(btnGame.Right + gap, y, Theme.Px(120), bh);
             btnRemove.SetBounds(btnAdd.Right + gap, y, Theme.Px(140), bh);
             btnMemory.SetBounds(btnRemove.Right + gap, y, Theme.Px(170), bh);
-            btnCharge.SetBounds(btnMemory.Right + gap, y, Theme.Px(200), bh);
             y += bh + Theme.Px(14);
 
             capClean.Location = new Point(0, y);
@@ -189,10 +186,6 @@ namespace TaskBoost
                 kv.Value.Primary = kv.Key == current;
                 kv.Value.Invalidate();
             }
-            bool charging = ChargeMode.IsOn;
-            btnCharge.Text = charging ? "End charging mode" : "Charge my phone";
-            btnCharge.Primary = charging;
-            btnCharge.Invalidate();
             if (GameModeChanged != null) GameModeChanged(on);
         }
 
@@ -213,7 +206,6 @@ namespace TaskBoost
         }
 
         // Also reachable from the global shortcuts
-        public void ToggleCharge() { if (btnCharge.Enabled) RunBusy(ChargeMode.IsOn ? "charge-off" : "charge-on", btnCharge); }
         public void FreeMemory() { if (btnMemory.Enabled) RunBusy("free-memory", btnMemory); }
 
         public void ToggleGameMode()
